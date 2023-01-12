@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
         http
                 .authorizeRequests()
+//                .antMatchers("api/users/**").permitAll();
                 .antMatchers("/login").anonymous()
                 .antMatchers("/admin**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/user").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
@@ -85,17 +86,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .csrf().disable();
 //    }
 
-    // аутентификация inMemory
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("user")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }

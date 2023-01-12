@@ -17,9 +17,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String showUserPage(Principal principal, Model model) {
-        User user = userService.findByEmail(principal.getName());
-        model.addAttribute("user", user);
+    public String mainPage() {
         return "user";
     }
 }
