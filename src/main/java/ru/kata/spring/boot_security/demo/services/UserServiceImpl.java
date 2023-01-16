@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Integer id) {
-       return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id).orElseThrow(() -> new IllegalStateException("No such user in database!"));
     }
 
     @Override
