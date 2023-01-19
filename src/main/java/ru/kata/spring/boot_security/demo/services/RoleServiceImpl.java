@@ -21,4 +21,10 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> getAllRole() {
         return roleRepository.findAll();
     }
+
+    @Override
+    public Role findRoleById (Integer id) {
+        return roleRepository.findById(id).orElseThrow(()->new IllegalStateException("No such role"));
+    }
+
 }

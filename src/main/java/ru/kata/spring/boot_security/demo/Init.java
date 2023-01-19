@@ -1,12 +1,11 @@
 package ru.kata.spring.boot_security.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -15,14 +14,12 @@ import java.util.List;
 public class Init {
 
     private final RoleRepository roleRepository;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
 
     @Autowired
-    public Init(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public Init(RoleRepository roleRepository, UserService userService) {
         this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @PostConstruct
@@ -36,7 +33,7 @@ public class Init {
         adminUser.setLastName("admin");
         adminUser.setAge(20);
         adminUser.setEmail("admin@mail.ru");
-        adminUser.setPassword(passwordEncoder.encode("admin"));
+        adminUser.setPassword("admin");
         adminUser.addRole(adminRole);
 
         User user = new User();
@@ -44,10 +41,10 @@ public class Init {
         user.setLastName("user");
         user.setAge(18);
         user.setEmail("user@mail.ru");
-        user.setPassword(passwordEncoder.encode("user"));
+        user.setPassword("user");
         user.addRole(userRole);
 
-        userRepository.save(adminUser);
-        userRepository.save(user);
+        userService.addUser(adminUser);
+        userService.addUser(user);
     }
 }
